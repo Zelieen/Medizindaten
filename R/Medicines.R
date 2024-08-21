@@ -7,7 +7,7 @@ library(readxl)
 library(stringr)
 
 #load data
-raw_data <- read.csv(file = "K:/AlpinInsight/Projekte/Medizindaten/Export_medicines_en.csv", sep = ";",  header = T) # From France: http://agence-prd.ansm.sante.fr/php/ecodex/telecharger/telecharger.php
+raw_data <- read.csv(file = "K:/AlpinInsight/Projekte/Medizindaten/data/fr_Export_medicines_en.csv", sep = ";",  header = T) # From France: http://agence-prd.ansm.sante.fr/php/ecodex/telecharger/telecharger.php
 
 #inspect raw data
 dim(raw_data) #2433 rows and 1023 columns
@@ -43,7 +43,7 @@ colnames(data_cleaned)
 # I really do not like the way excel messed up the data and names when it exported to csv. It is cumbersome.
 
 ##try importing the excel sheet directly instead of exporting it from Excel to csv. I will need the 'readxl' library for this. Base R can not read excel.
-excel_raw_data <- read_excel(path = "K:/AlpinInsight/Projekte/Medizindaten/medicines_output_medicines_en.xlsx")
+excel_raw_data <- read_excel(path = "K:/AlpinInsight/Projekte/Medizindaten/data/fr_medicines_output_medicines_en.xlsx")
 
 dim(excel_raw_data) #2441 rows and 39 colums
 head(excel_raw_data) #lots of NA?
