@@ -133,3 +133,31 @@ ggplot(cleaned_data,
   labs(title = "Medicines in France") +
   theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1)) +
   scale_x_date(breaks = "years", date_labels =  "%Y")
+
+
+#look at all the influenza relevant data
+IV_data <-  cleaned_data[grep(cleaned_data$`Therapeutic area (MeSH)`, pattern = "Influenza"),]
+
+#some of the owners have slightly different spelled names --> combine them
+Seqirus <- grep(IV_data$`Marketing authorisation developer / applicant / holder`, pattern = "Seqirus")
+Glaxo <- grep(IV_data$`Marketing authorisation developer / applicant / holder`, pattern = "Glaxo")
+Sanofi <- grep(IV_data$`Marketing authorisation developer / applicant / holder`, pattern = "Sanofi")
+
+IV_data$`Marketing authorisation developer / applicant / holder`[Seqirus] <- "Seqirus"
+IV_data$`Marketing authorisation developer / applicant / holder`[Glaxo] <- "GlaxoSmithKline"
+IV_data$`Marketing authorisation developer / applicant / holder`[Sanofi] <- "Sanofi Pasteur"
+
+#now reorder by occurence
+NewOrder <- rownames(sort(table(IV_data$`Marketing authorisation developer / applicant / holder`), decreasing = T))
+
+ggplot(IV_data, 
+       aes(`Marketing authorisation developer / applicant / holder`, 
+           fill = `Marketing authorisation developer / applicant / holder`)) +
+  geom_bar() +
+  geom_text(stat = "count",
+            aes(label=..count..), vjust= -0.5) +
+  scale_x_discrete(limits = NewOrder) +
+  theme_classic() +
+  labs(title = "Influenza medicines per owner") +
+  theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust = 1, face = "bold"),
+        legend.position = "none")
