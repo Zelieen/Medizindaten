@@ -45,10 +45,10 @@ colnames(data_cleaned)
 ##try importing the excel sheet directly instead of exporting it from Excel to csv. I will need the 'readxl' library for this. Base R can not read excel.
 excel_raw_data <- read_excel(path = "K:/AlpinInsight/Projekte/Medizindaten/data/fr_medicines_output_medicines_en.xlsx")
 
-dim(excel_raw_data) #2441 rows and 39 colums
+dim(excel_raw_data) #2441 rows and 39 columns
 head(excel_raw_data) #lots of NA?
 excel_raw_data[1:15,2] #seems that the data starts at row 8 with the column names
-clean_excel <- as.data.frame(excel_raw_data[9:length(excel_raw_data[,1]),]) #drop the first 8 rows
+clean_excel <- as.data.frame(excel_raw_data[9:dim(excel_raw_data)[1],]) #drop the first 8 rows
 
 colnames(clean_excel) <- excel_raw_data[8,] #write proper column names
 
@@ -104,6 +104,7 @@ ggplot(data = plot_data, aes(Category)) +
   labs(title = "Medicines in France")
 
 #now use the full data set
+#Target species
 ggplot(cleaned_data, 
        aes(Category, 
            fill = Category)) +
@@ -113,3 +114,22 @@ ggplot(cleaned_data,
   theme_classic() +
   labs(title = "Medicines in France")
 
+#authorization status
+ggplot(cleaned_data, 
+       aes(`Medicine status`, 
+           fill = `Medicine status`)) +
+  geom_bar() +
+  geom_text(stat = "count",
+            aes(label=..count..), vjust= -0.5) +
+  theme_classic() +
+  labs(title = "Medicines in France") +
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1))
+
+#first published
+ggplot(cleaned_data, 
+       aes(`First published date`)) +
+  geom_area(stat = "bin") +
+  theme_classic() +
+  labs(title = "Medicines in France") +
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1)) +
+  scale_x_date(breaks = "years", date_labels =  "%Y")
