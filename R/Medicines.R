@@ -156,7 +156,7 @@ ggplot(IV_data,
   geom_bar() +
   geom_text(stat = "count",
             aes(label=..count..), vjust= -0.5) +
-  scale_x_discrete(limits = NewOrder) +
+  scale_x_discrete(limits = NewOrder) + #this defines the order, values follow suit automatically
   theme_classic() +
   labs(title = "Influenza medicines per owner") +
   theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust = 1, face = "bold"),
