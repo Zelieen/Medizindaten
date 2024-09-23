@@ -128,7 +128,15 @@ ggplot(cleaned_data,
 #first published
 ggplot(cleaned_data, 
        aes(`First published date`)) +
-  geom_area(stat = "bin") +
+  geom_histogram(binwidth = 126.65, color = "black", fill = "steelblue") +
+  theme_classic() +
+  labs(title = "Medicines in France") +
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1)) +
+  scale_x_date(breaks = "years", date_labels =  "%Y")
+#European Commission
+ggplot(cleaned_data, 
+       aes(`European Commission decision date`)) +
+  geom_histogram(binwidth = 126.65, color = "black", fill = "steelblue") +
   theme_classic() +
   labs(title = "Medicines in France") +
   theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1)) +
@@ -161,3 +169,24 @@ ggplot(IV_data,
   labs(title = "Influenza medicines per owner") +
   theme(axis.text.x = element_text(angle = 30, vjust = 1, hjust = 1, face = "bold"),
         legend.position = "none")
+
+#first published
+ggplot(IV_data, 
+       aes(`European Commission decision date`)) +
+  geom_histogram(binwidth = 365, color = "black", fill = "steelblue") +
+  theme_classic() +
+  labs(title = "Influenza Medicines in France") +
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1)) +
+  scale_x_date(breaks = "years", date_labels =  "%Y")
+
+
+#all the vaccines
+Vac_data <- cleaned_data[grep(cleaned_data$`ATC code (human)`, pattern = "J07"),]
+
+ggplot(Vac_data, 
+       aes(`European Commission decision date`)) +
+  geom_histogram(binwidth = 365, color = "black", fill = "steelblue") +
+  theme_classic() +
+  labs(title = "Vaccines in France") +
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust = 1)) +
+  scale_x_date(breaks = "years", date_labels =  "%Y")
